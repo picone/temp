@@ -8,14 +8,16 @@ switch($_GET['a']){
 	case '':
 		echo 'OK';
 		break;
-	case 'upload':
+	case 'upload'://上传数据
 		$db->insertRecord((float)$_GET['temp'],(double)$_GET['lng'],(double)$_GET['lat']);
-		if($db->getLastErrorCode())
+		if($db->getLastErrorCode())//插入错误
 			echo $db->getLastErrorMsg();
 		else
 			echo 'success';
 		break;
-	default :
+	case 'get'://获取数据
+		break;
+	default:
 		echo 'Unknow action!';
 }
 ?>

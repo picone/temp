@@ -9,6 +9,7 @@ class DB extends SQLite3{
 		$this->exec('DROP TABLE IF EXISTS [temp]');
 		$this->exec('CREATE TABLE [temp] ([_id] INTEGER PRIMARY KEY AUTOINCREMENT,[temp] REAL,[lng] REAL,[lat] REAL,[create_time] DATETIME)');
 		$this->exec('CREATE INDEX [timeline] ON [temp]([create_time])');
+		$this->exec('CREATE INDEX [location] ON [temp]([lng],[lat])');
 	}
 
 	public function insertRecord($temp,$lng,$lat){
