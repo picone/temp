@@ -15,6 +15,11 @@ class DB extends SQLite3{
 	public function insertRecord($temp,$lng,$lat){
 		$this->exec(sprintf('INSERT INTO [temp] ([temp],[lng],[lat],[create_time]) VALUES (%f,%lf,%lf,%d)',$temp,$lng,$lat,time()));
 	}
+	
+	public function isInstall(){
+		$data=$this->query('SELECT count([name]) FROM sqlite_master WHERE [type]=\'table\' AND [name]=\'temp\'')->fetchArray(SQLITE3_ASSOC);
+		return $data['count([name])']>0;
+	}
 
 	public function getLastErrorCode(){
 		return parent::lastErrorCode();

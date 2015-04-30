@@ -7,7 +7,7 @@ $db=new DB();
 $result=array();
 switch($_GET['a']){
 	case '':
-		if(file_exists(CUR_PATH.'temp.db')){
+		if($db->isInstall()){
 			$result['msg']='OK';
 		}else{
 			$result['msg']='Not installed';
