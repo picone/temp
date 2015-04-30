@@ -4,20 +4,26 @@ define('CUR_PATH',dirname(__FILE__).DIRECTORY_SEPARATOR);
 define('MOD_PATH',CUR_PATH.'mod'.DIRECTORY_SEPARATOR);
 include(MOD_PATH.'db.php');
 $db=new DB();
+$result=array();
 switch($_GET['a']){
 	case '':
-		echo 'OK';
+		if(file_exists(CUR_PATH.'temp.db')){
+			$result['msg']='OK';
+		}else{
+			$result['msg']='Not installed';
+		}
 		break;
 	case 'upload'://上传数据
 		$db->insertRecord((float)$_GET['temp'],(double)$_GET['lng'],(double)$_GET['lat']);
 		if($db->getLastErrorCode())//插入错误
-			echo $db->getLastErrorMsg();
+			$result['msg']=$db->getLastErrorMsg();
 		else
-			echo 'success';
+			$result['msg']='OK';
 		break;
 	case 'get'://获取数据
 		break;
 	default:
-		echo 'Unknow action!';
+		$result['msg']='Unknown action';
 }
+echo json_encode($result);
 ?>
