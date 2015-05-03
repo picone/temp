@@ -21,6 +21,8 @@ switch($_GET['a']){
 			$result['msg']='OK';
 		break;
 	case 'get'://获取数据
+		$result['data']=$db->fetchRecord((int)$_GET['t']);
+		if($result['no']=$db->getLastErrorCode())$result['msg']=$db->getLastErrorMsg();
 		break;
 	default:
 		$result['msg']='Unknown action';
