@@ -23,12 +23,11 @@ class DB extends SQLite3{
 	}
 	
 	public function fetchRecord($t){
-		$query=$this->query('SELECT [temp],[lng],[lat] FROM [temp] WHERE [t]='.$t);
-		$result=array();
-		while($data=$query->fetchArray(SQLITE3_ASSOC)){
-			$result[]=$data;
-		}
-		return $result;
+		return $this->fetchAll($this->query('SELECT [temp],[lng],[lat] FROM [temp] WHERE [t]='.$t));
+	}
+	
+	public function getAll(){
+		return $this->fetchAll($this->query('SELECT [t],[lng],[lat],[temp] FROM [temp]'));
 	}
 
 	public function getLastErrorCode(){
@@ -37,6 +36,14 @@ class DB extends SQLite3{
 
 	public function getLastErrorMsg(){
 		return parent::lastErrorMsg();
+	}
+	
+	private function fetchAll($query){
+		$result=array();
+		while($data=$query->fetchArray(SQLITE3_ASSOC)){
+			$result[]=$data;
+		}
+		return $result;
 	}
 
 	public function __descruct(){

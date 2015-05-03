@@ -6,7 +6,7 @@ include(MOD_PATH.'db.php');
 $db=new DB();
 $result=array();
 switch($_GET['a']){
-	case '':
+	case ''://测试表存在
 		if($db->isInstall()){
 			$result['msg']='OK';
 		}else{
@@ -23,6 +23,11 @@ switch($_GET['a']){
 	case 'get'://获取数据
 		$result['data']=$db->fetchRecord((int)$_GET['t']);
 		if($result['no']=$db->getLastErrorCode())$result['msg']=$db->getLastErrorMsg();
+		break;
+	case 'offline'://离线数据
+		$data=$db->getAll();
+		foreach($data as &$val)
+			$result[$val['t']][]=array('lng'=>$val['lng'],'lat'=>$val['lat'],'temp'=>$val['temp']);
 		break;
 	default:
 		$result['msg']='Unknown action';
